@@ -15,7 +15,7 @@ steps:
 - name: 'gcr.io/cloud-builders/gcloud'
   args: ['beta', 'run', 'deploy', '--image', 'gcr.io/$PROJECT_ID/santosh:$SHORT_SHA', '--region', 'us-central1', '--platform', 'managed']
 images:
-- gcr.io/$PROJECT_ID/santosh:$SHORT_SHA
+- gcr.io/$PROJECT_ID/santosh
                      
 
 
