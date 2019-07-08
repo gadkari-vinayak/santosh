@@ -5,11 +5,9 @@ steps:
   args: ['clone','https://github.com/gadkari-vinayak/santosh.git']
 
 - name: 'gcr.io/cloud-builders/docker'
-  args: 
-  - 'build'
-  - '-t'
-  - 'gcr.io/$PROJECT_ID/helloworld:$SHORT_SHA'
+  args: ['build', '-t', 'gcr.io/$PROJECT_ID/hworld', '.']
+images: ['gcr.io/$PROJECT_ID/hworld']
 
 - name: 'gcr.io/cloud-builders/docker'
   id: 'Push'
-  args: ['push', 'gcr.io/$PROJECT_ID/helloworld:$SHORT_SHA']
+  args: ['push', 'gcr.io/$PROJECT_ID/hworld:$SHORT_SHA']
