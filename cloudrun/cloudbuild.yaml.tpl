@@ -7,6 +7,6 @@ steps:
   args: ['push', 'gcr.io/$PROJECT_ID/santosh']
   # Deploy container image to Cloud Run
 - name: 'gcr.io/cloud-builders/gcloud'
-  args: ['beta', 'run', 'deploy', '--image', 'gcr.io/$PROJECT_ID/santosh', '--region', 'us-central1', '--platform', 'managed']
+  args: ['beta', 'run', 'deploy', '--image', 'gcr.io/$PROJECT_ID/santosh:latest', '--region', 'us-central1', '--platform', 'managed']
 images:
 - gcr.io/$PROJECT_ID/santosh
