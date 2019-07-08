@@ -1,12 +1,11 @@
 steps:
   # build the container image
 - name: 'gcr.io/cloud-builders/docker'
-  args: ['build', '-t', 'gcr.io/$PROJECT_ID/santosh:latest', '.']
+  args: ['build', '-t', 'gcr.io/$PROJECT_ID/santosh:newtag', '.']
   # push the container image to Container Registry
 - name: 'gcr.io/cloud-builders/docker'
-  args: ['push', 'gcr.io/$PROJECT_ID/santosh:latest']
+  args: ['push', 'gcr.io/$PROJECT_ID/santosh:newtag']
   # Deploy container image to Cloud Run
 - name: 'gcr.io/cloud-builders/gcloud'
-  args: ['beta', 'run', 'deploy', 'santosh', '--image', 'gcr.io/$PROJECT_ID/santosh:latest', '--region', 'us-central1', '--platform', 'managed']
-images:
-- gcr.io/$PROJECT_ID/santosh:latest
+  args: ['beta', 'run', 'deploy', 'santosh', '--image', 'gcr.io/$PROJECT_ID/santosh:newtag', '--region', 'us-central1', '--platform', 'managed']
+images: ['gcr.io/$PROJECT_ID/santosh:newtag']
