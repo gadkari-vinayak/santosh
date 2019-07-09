@@ -1,3 +1,8 @@
 FROM nginx:latest
 ADD /cloudrun/index.html /usr/share/nginx/html
-ENTRYPOINT ["/"]
+CMD ["nginx"]
+
+# Expose ports.
+EXPOSE 80
+
+
