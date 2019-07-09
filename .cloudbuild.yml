@@ -1,0 +1,20 @@
+steps:
+- name: 'gcr.io/$PROJECT_ID/firebase'
+args: [ 'use', '$_PROJECT_NAME']
+secretEnv: ['1/QMCe0z67jJ9y32IDYYionXOwryP0VS1keb1-8TdUm7w']
+
+
+- name: 'gcr.io/cloud-builders/npm'
+dir: 'functions'
+args: ['install']
+
+
+- name: 'gcr.io/$PROJECT_ID/firebase'
+args: [ 'deploy', '--only', 'functions']
+secretEnv: ['1/QMCe0z67jJ9y32IDYYionXOwryP0VS1keb1-8TdUm7w']
+
+
+secrets:
+- kmsKeyName: 'projects/YOUR_PROJECT_NAME/locations/global/keyRings/ci-ring/cryptoKeys/deployment'
+secretEnv:
+FIREBASE_TOKEN: '1/QMCe0z67jJ9y32IDYYionXOwryP0VS1keb1-8TdUm7w'
