@@ -1,17 +1,24 @@
-# Use the official Python image.
-# https://hub.docker.com/_/python
-FROM python:3.7
+# Use the offical Golang image to create a build artifact.
+# This is based on Debian and sets the GOPATH to /go.
+# https://hub.docker.com/_/golang
+FROM golang:1.12 as builder
 
 # Copy local code to the container image.
-ENV APP_HOME /app
-WORKDIR $APP_HOME
+WORKDIR /go/src/github.com/knative/docs/helloworld
 COPY . .
 
-# Install production dependencies.
-RUN pip install Flask gunicorn
+# Build the command inside the container.
+# (You may fetch or manage dependencies here,
+# either manually or with a tool like "godep".)
+RUN CGO_ENABLED=0 GOOS=linux go build -v -o helloworld
 
-# Run the web service on container startup. Here we use the gunicorn
-# webserver, with one worker process and 8 threads.
-# For environments with multiple CPU cores, increase the number of workers
-# to be equal to the cores available.
-CMD exec gunicorn --bind :$PORT --workers 1 --threads 8 app:app
+# Use a Docker multi-stage build to create a lean production image.
+# https://docs.docker.com/develop/develop-images/multistage-build/#use-multi-stage-builds
+FROM alpine
+RUN apk add --no-cache ca-certificates
+
+# Copy the binary to the production image from the builder stage.
+COPY --from=builder /go/src/github.com/knative/docs/helloworld/helloworld /helloworld
+
+# Run the web service on container startup.
+CMD ["/helloworld"]
